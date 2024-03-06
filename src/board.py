@@ -39,3 +39,5 @@ class Board:
             prev_position (int): The previous position of the player.
         """
         print(f"{player.name} moves from {prev_position} to {player.position}, The Goose. ", end="")
+        self.move_player(player, player.position - prev_position, [])  # Pass an empty list as players to avoid prank
+
