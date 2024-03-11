@@ -7,3 +7,4 @@ class Dice:
 
     def roll(self):
         return random.randint(1, self.faces), random.randint(1, self.faces)
+

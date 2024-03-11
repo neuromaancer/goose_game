@@ -3,7 +3,6 @@ class Board:
         self.spaces = 63
         self.goose_spaces = [5, 9, 14, 18, 23, 27]
 
-
     def is_winner(self, player):
         return player.position == self.spaces
 
@@ -19,14 +18,18 @@ class Board:
         prev_position = player.position
         player.position += steps
 
-        if player.position == 6: # The Bridge
-            print(f"{player.name} moves from {prev_position} to The Bridge. {player.name} jumps to 12")
-            player.position = 12 # The Goose
+        if player.position == 6:  # The Bridge
+            print(
+                f"{player.name} moves from {prev_position} to The Bridge. {player.name} jumps to 12"
+            )
+            player.position = 12  # The Goose
         elif player.position in self.goose_spaces:
             self.move_player_goose(player, prev_position)
-        elif player.position > self.spaces: # Bounce
+        elif player.position > self.spaces:  # Bounce
             player.position = self.spaces - (player.position - self.spaces)
-            print(f"{player.name} moves from {prev_position} to 63. {player.name} bounces! {player.name} returns to {player.position}")
+            print(
+                f"{player.name} moves from {prev_position} to 63. {player.name} bounces! {player.name} returns to {player.position}"
+            )
         else:
             self.prank(player, prev_position, players)
 
@@ -38,6 +41,20 @@ class Board:
             player (Player): The player to move.
             prev_position (int): The previous position of the player.
         """
-        print(f"{player.name} moves from {prev_position} to {player.position}, The Goose. ", end="")
-        self.move_player(player, player.position - prev_position, [])  # Pass an empty list as players to avoid prank
+        print(
+            f"{player.name} moves from {prev_position} to {player.position}, The Goose. ",
+            end="",
+        )
+        self.move_player(
+            player, player.position - prev_position, []
+        )  # Pass an empty list as players to avoid prank
 
+    def prank(self, player, prev_position, players):
+        for other_player in players:
+            if other_player != player and other_player.position == player.position:
+                print(
+                    f"{player.name} moves from {prev_position} to {player.position}. On {player.position} there is {other_player.name}, who returns to {prev_position}"
+                )
+                other_player.position = prev_position
+                return
+        print(f"{player.name} moves from {prev_position} to {player.position}")
